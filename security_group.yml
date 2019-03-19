@@ -1,0 +1,22 @@
+---
+- name: Create AWS resources
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Create a security group
+    ec2_group:
+      name: Alex 
+      description: AlexsSecurityGroup
+      region: "{{aws_region}}"
+      vpc_id: "{{vpc_id}}"
+      aws_access_key: "{{aws_access_key}}"
+      aws_secret_key: "{{aws_secret_key}}"
+      purge_rules: false
+      rules:
+        - proto: tcp
+          ports:
+          - 80
+          cidr_ip: "{{cidr_ip}}"
+          rule_desc: alex security rule
